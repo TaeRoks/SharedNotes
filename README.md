@@ -7,3 +7,5 @@ Features to improve:
 -search though notes
 -notes order by time created
 -DTO
+-add comments to code
+-implement testes
