@@ -1,0 +1,39 @@
+﻿@page "/edit-note/{id:int}"
+@inject INoteService NoteService
+@rendermode InteractiveWebAssembly 
+
+
+<h3>Edit @note.Title</h3>
+
+
+
+<EditForm Model="note" OnSubmit="HandleSubmit">
+    <label>Title</label>
+    <InputText @bind-Value="note.Title">@note.Title</InputText>
+        <label>Content</label>
+        <InputText @bind-Value="note.Content">@note.Content</InputText>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button @onclick="DeleteNote" type="button" class="btn btn-danger">Delete</button>
+    </EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    Note note { get; set; } = new Note { Title = string.Empty };
+
+    protected override async Task OnParametersSetAsync()
+    {
+        note = await NoteService.GetNoteById(Id);        
+    }
+
+    async Task HandleSubmit()
+    {
+        
+        await NoteService.EditNote(Id, note);
+    }
+
+    async Task DeleteNote()
+    {
+        await NoteService.DeleteNote(Id);
+    }
+}

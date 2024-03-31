@@ -1,0 +1,30 @@
+﻿@page "/create-note"
+@inject INoteService NoteService
+@rendermode InteractiveWebAssembly
+
+
+<h3>Create Note</h3>
+
+
+
+
+<EditForm Model="note" OnSubmit="HandleSubmit">
+    <label>Title</label>
+    <InputText @bind-Value="note.Title">@note.Title</InputText>
+        <label>Content</label>
+        <InputText @bind-Value="note.Content">@note.Content</InputText>
+        <button type="submit" class="btn btn-primary">Create</button>
+        
+</EditForm>
+
+@code {
+    
+    Note note { get; set; } = new Note { Title = string.Empty, Content = string.Empty };
+
+    
+    async Task HandleSubmit()
+    {        
+        await NoteService.AddNote(note);
+        
+    }   
+}

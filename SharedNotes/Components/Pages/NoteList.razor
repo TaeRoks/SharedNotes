@@ -1,0 +1,34 @@
+﻿@page "/notes"
+@inject INoteService NoteService
+@rendermode InteractiveServer
+<h3>NoteList</h3>
+
+
+@if(notes == null)
+{
+    <span>Fetching notes...</span>
+}
+else if(notes.Count == 0)
+{
+    <span>No notes found.</span>
+}
+else
+{
+     <ul>
+        @foreach (var note in notes)
+        {
+            <li>@note.Title Content: @note.Content <EditNoteButton Id="note.Id"/></li>
+        }
+    </ul> 
+}
+<CreateNoteButton/>
+@code {
+    List<Note>? notes = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        notes = await NoteService.GetAllNotes();
+    }
+
+    
+}

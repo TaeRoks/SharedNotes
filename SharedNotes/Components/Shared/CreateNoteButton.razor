@@ -1,0 +1,11 @@
+﻿@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<button @onclick="CreateNote" class="btn btn-primary">Create new note</button>
+@code {
+
+    void CreateNote()
+    {
+        NavigationManager.NavigateTo("/create-note");
+    }
+}
